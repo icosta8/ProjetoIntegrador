@@ -1,4 +1,4 @@
-
+https://github.com/icosta8/ProjetoIntegrador/blob/main/RELATORIO.JS
     const logData = localStorage.getItem('logData');
     const parser = new DOMParser();
     const doc = parser.parseFromString(`<ul>${logData}</ul>`, 'text/html');
