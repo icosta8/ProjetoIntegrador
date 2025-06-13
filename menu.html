@@ -1,95 +1,95 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Menu</title>
-  <link rel="stylesheet" href="menu.css" />
-    <!-- Favicon -->
-  
-  <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs9eKaef5dgog-LCS9MFFN5Gltrpp0mtTB8A&s" />
-</head>
-<body>
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+    <link rel="stylesheet" href="menu.css" />
+      <!-- Favicon -->
+    
+    <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs9eKaef5dgog-LCS9MFFN5Gltrpp0mtTB8A&s" />
+  </head>
+  <body>
 
 
-   <header class="header">
-        <!-- Substitua "logo.png" pelo caminho da sua logo -->
-        <img src="imagens/LOGO2.png" alt="Logo da Empresa" class="logo">
-        
-    </header>
-
-
-   <!--lista suspensa-->
-
-<body>
-  <!-- Sidebar -->
-  <div class="sidebar-container">
-    <div class="sidebar-header">MENU</div>
-    <ul class="sidebar-menu">
-     
-           <li class="sidebar-item" data-page="menu.html">
-       Principal
-      </li>
-      <li class="sidebar-item" data-page="CADASTRO.html">
-        <span class="sidebar-icon">📝</span> Cadastro
-      </li>
-      <li class="sidebar-item" data-page="ESTOQUE.html">
-        <span class="sidebar-icon">📦</span> Estoque
-      </li>
-      <li class="sidebar-item" data-page="RELATORIO.html">
-        <span class="sidebar-icon">📊</span> Relatórios
-      </li>
-      <li class="sidebar-item" data-page="MOVIMENTACOES.html">
-        <span class="sidebar-icon">🔄</span> Movimentações
-      </li>
-    </ul>
-  </div>
-
-  <!-- Conteúdo principal -->
-  <div class="main-content">
-    <!-- Seu conteúdo aqui -->
-  </div>
-
-  <script>
-    // JavaScript para lidar com os cliques na sidebar
-    document.addEventListener('DOMContentLoaded', function() {
-      const sidebarItems = document.querySelectorAll('.sidebar-item:not(.disabled)');
-      
-      sidebarItems.forEach(item => {
-        item.addEventListener('click', function() {
-          // Remove a classe active de todos os itens
-          sidebarItems.forEach(i => i.classList.remove('active'));
+    <header class="header">
+          <!-- Substitua "logo.png" pelo caminho da sua logo -->
+          <img src="imagens/LOGO2.png" alt="Logo da Empresa" class="logo">
           
-          // Adiciona a classe active ao item clicado
-          this.classList.add('active');
-          
-          // Navega para a página (mantendo sua lógica original)
-          const page = this.getAttribute('data-page');
-          if (page) {
-            window.location.href = page;
-            // Ou use sua lógica específica de navegação aqui
-          }
-        });
-      });
-      
-      // Ativa o item correspondente à página atual
-      const currentPage = window.location.pathname.split('/').pop();
-      const activeItem = document.querySelector(`.sidebar-item[data-page="${currentPage}"]`);
-      if (activeItem) {
-        activeItem.classList.add('active');
-      }
-    });
-  </script>
+      </header>
 
-    <main class="main-content">
-   
-      <main class="content">
-    <div class="left-section">
-      <img id="menuimg" src = "imagens/menu.png" class="menuimg">
+
+    <!--lista suspensa-->
+
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar-container">
+      <div class="sidebar-header">MENU</div>
+      <ul class="sidebar-menu">
+      
+            <li class="sidebar-item" data-page="menu.html">
+        Principal
+        </li>
+        <li class="sidebar-item" data-page="CADASTRO.html">
+          <span class="sidebar-icon">📝</span> Cadastro
+        </li>
+        <li class="sidebar-item" data-page="ESTOQUE.html">
+          <span class="sidebar-icon">📦</span> Estoque
+        </li>
+        <li class="sidebar-item" data-page="RELATORIO.html">
+          <span class="sidebar-icon">📊</span> Relatórios
+        </li>
+        <li class="sidebar-item" data-page="MOVIMENTACOES.html">
+          <span class="sidebar-icon">🔄</span> Movimentações
+        </li>
+      </ul>
     </div>
-  </main>
-    </main>
-  </div>
 
-</body>
-</html>
+    <!-- Conteúdo principal -->
+    <div class="main-content">
+      <!-- Seu conteúdo aqui -->
+    </div>
+
+    <script>
+      // JavaScript para lidar com os cliques na sidebar
+      document.addEventListener('DOMContentLoaded', function() {
+        const sidebarItems = document.querySelectorAll('.sidebar-item:not(.disabled)');
+        
+        sidebarItems.forEach(item => {
+          item.addEventListener('click', function() {
+            // Remove a classe active de todos os itens
+            sidebarItems.forEach(i => i.classList.remove('active'));
+            
+            // Adiciona a classe active ao item clicado
+            this.classList.add('active');
+            
+            // Navega para a página (mantendo sua lógica original)
+            const page = this.getAttribute('data-page');
+            if (page) {
+              window.location.href = page;
+              // Ou use sua lógica específica de navegação aqui
+            }
+          });
+        });
+        
+        // Ativa o item correspondente à página atual
+        const currentPage = window.location.pathname.split('/').pop();
+        const activeItem = document.querySelector(`.sidebar-item[data-page="${currentPage}"]`);
+        if (activeItem) {
+          activeItem.classList.add('active');
+        }
+      });
+    </script>
+
+      <main class="main-content">
+    
+        <main class="content">
+      <div class="left-section">
+        <img id="menuimg" src = "imagens/menu.png" class="menuimg">
+      </div>
+    </main>
+      </main>
+    </div>
+
+  </body>
+  </html>
