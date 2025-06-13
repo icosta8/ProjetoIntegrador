@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatórios - Estoque</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="RELATORIO.CSS" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs9eKaef5dgog-LCS9MFFN5Gltrpp0mtTB8A&s" />
+</head>
+
+<body class="bg-light">
+  <header class="header">
+    <img src="imagens/LOGO2.png" alt="Logo da Empresa" class="logo">
+  </header>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container">
+    <div class="sidebar-header">MENU</div>
+    <ul class="sidebar-menu">
+      <li class="sidebar-item disabled"></li>
+      <li class="sidebar-item" data-page="menu.html"> Principal</li>
+      <li class="sidebar-item" data-page="CADASTRO.html">
+        <span class="sidebar-icon">📝</span> Cadastro
+      </li>
+      <li class="sidebar-item" data-page="ESTOQUE.html">
+        <span class="sidebar-icon">📦</span> Estoque
+      </li>
+      <li class="sidebar-item" data-page="RELATORIO.html">
+        <span class="sidebar-icon">📊</span> Relatórios
+      </li>
+      <li class="sidebar-item" data-page="MOVIMENTACOES.html">
+        <span class="sidebar-icon">🔄</span> Movimentações
+      </li>
+    </ul>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <div class="main-content container py-4">
+    <div class="row mb-4">
+      <!-- Card 1 -->
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 bg-white">
+          <div class="card-body">
+            <h5 class="card-title">Quantidade Total em Estoque</h5>
+            <p class="card-text" id="quantidadeTotal">Carregando...</p>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="col-md-6">
+        <div class="card shadow-sm border-0 bg-white">
+          <div class="card-body">
+            <h5 class="card-title">Quantidade de Itens Únicos</h5>
+            <p class="card-text" id="quantidadeItens">Carregando...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <h3 class="text-center mb-4">Estoque Atual por Peça</h3>
+      <canvas id="graficoEstoque" class="img-fluid"></canvas>
+    </div>
+  </div>
+
+  <!-- Estilos adicionais -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      background-color: #f8f9fa;
+    }
+
+    .chart-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.1);
+    }
+
+    .sidebar-container {
+      width: 250px;
+      background: rgb(0, 0, 0);
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 1rem 1.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin-top: 21px;
+    }
+
+    .sidebar-item {
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #ffffff;
+      border-left: 3px solid transparent;
+      display: block;
+      text-decoration: none;
+    }
+
+    .sidebar-item:hover {
+      background-color: #adb5bd;
+      color: #0d6efd;
+    }
+
+    .sidebar-item.active {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+      border-left: 3px solid #0d6efd;
+      font-weight: 500;
+    }
+
+    .sidebar-item.disabled {
+      color: #adb5bd;
+      cursor: not-allowed;
+      background-color: transparent;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      flex: 1;
+    }
+
+    .sidebar-icon {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+      display: inline-block;
+    }
+  </style>
+
+  <!-- Gráfico Pizza - Estoque -->
+  <script>
+    // Lê os dados do localStorage
+    const dadosEstoqueStr = localStorage.getItem('estoque');
+    let dadosEstoque = [];
+
+    try {
+      if (dadosEstoqueStr) {
+        dadosEstoque = JSON.parse(dadosEstoqueStr);
+      }
+    } catch (error) {
+      console.error("Erro ao ler os dados do localStorage:", error);
+    }
+
+    // Agrupa as quantidades por nome
+    const resumoEstoque = {};
+    dadosEstoque.forEach(item => {
+      if (!resumoEstoque[item.nome]) {
+        resumoEstoque[item.nome] = 0;
+      }
+      resumoEstoque[item.nome] += item.quantidade;
+    });
+
+    const nomes = Object.keys(resumoEstoque);
+    const quantidades = Object.values(resumoEstoque);
+    const cores = [
+      '#0d6efd', '#6610f2', '#6f42c1', '#198754', '#fd7e14',
+      '#dc3545', '#20c997', '#ffc107', '#0dcaf0', '#6c757d'
+    ];
+
+    const ctx = document.getElementById('graficoEstoque').getContext('2d');
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: nomes,
+        datasets: [{
+          label: 'Quantidade em Estoque',
+          data: quantidades,
+          backgroundColor: cores,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.label}: ${context.raw} unidades`;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Atualiza os cards com as informações
+    document.addEventListener('DOMContentLoaded', () => {
+      const totalQuantidade = quantidades.reduce((acc, q) => acc + q, 0);
+      const totalItens = nomes.length;
+
+      document.getElementById('quantidadeTotal').textContent = `${totalQuantidade} peças no total`;
+      document.getElementById('quantidadeItens').textContent = `${totalItens} tipos de peças`;
+    });
+  </script>
+
+  <!-- Ativação do item de menu atual -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const sidebarItems = document.querySelectorAll('.sidebar-item:not(.disabled)');
+      sidebarItems.forEach(item => {
+        item.addEventListener('click', function () {
+          sidebarItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+          const page = this.getAttribute('data-page');
+          if (page) {
+            window.location.href = page;
+          }
+        });
+      });
+
+      const currentPage = window.location.pathname.split('/').pop();
+      const activeItem = document.querySelector(`.sidebar-item[data-page="${currentPage}"]`);
+      if (activeItem) {
+        activeItem.classList.add('active');
+      }
+    });
+  </script>
+
+  <!-- Script personalizado -->
+  <script src="RELATORIO.JS"></script>
+</body>
+</html>

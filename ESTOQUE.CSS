@@ -1,0 +1,195 @@
+  /* Reset */
+  :root {
+    --primary-color: #000000;
+    --secondary-color: #000000;
+    --accent-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #000000;
+}
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+    body {
+      background: #f5f7fa;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0px;
+    }
+
+    .header {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 15px 3000px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0px;
+    
+}
+
+.logo {
+    height: 100px;
+    margin-right: 0px;
+    
+    
+}
+    
+    header h1 {
+      font-size: 2.5rem;
+      color: #000;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      color: #000;
+      font-size: 1.1rem;
+     
+    }
+
+    main {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      justify-content: space-between;
+    }
+
+    
+   section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(13, 76, 146, 0.1);
+      padding: 20px;
+      flex: 1;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      height: 600px;
+    }
+    #ItensEmEstoque {
+      flex: unset;
+      width: 100%; /* ou qualquer valor que você quiser, como 100%, 800px, etc. */
+      min-width: 1000px;
+      margin: 0 auto; /* centraliza */
+      background-color: #ffffff; /* opcional, só para destacar visualmente */
+      padding: 20px; /* opcional, só para melhorar o espaço interno */
+    }
+
+    section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #000;
+      border-bottom: 2px solid #000;
+      padding-bottom: 8px;
+   
+    }
+
+    ul {
+      list-style: none;
+      overflow-y: auto;
+      flex-grow: 1;
+      padding-right: 10px;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+      transition: background-color 0.3s ease;
+      cursor: default;
+    }
+
+    
+    /* Scrollbar  */
+    ul::-webkit-scrollbar {
+      width: 8spx;
+    }
+
+    ul::-webkit-scrollbar-thumb {
+      background: #000;
+      border-radius: 20px;
+    }
+
+    ul::-webkit-scrollbar-track {
+      background: #f0f4fb;
+      border-radius: 20px;
+    }
+
+   /* TABELA CONTROLE DE ITENS */
+.container {
+ margin-bottom: 300px;
+}
+
+.inventory-control h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-entry {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-entry:hover {
+  background-color: #45a049;
+}
+
+.btn-exit {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-exit:hover {
+  background-color: #d32f2f;
+}
+
+    /* Responsive */
+ 
+    

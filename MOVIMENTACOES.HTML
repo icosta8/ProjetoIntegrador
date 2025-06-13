@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Movimentações de Estoque</title>
+  <link rel="stylesheet" href="MOVIMENTACOES.CSS" />
+  <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs9eKaef5dgog-LCS9MFFN5Gltrpp0mtTB8A&s" />
+
+<body>
+
+ <header class="header">
+    <img src="imagens/LOGO2.png" alt="Logo da Empresa" class="logo" />
+  </header>
+
+
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin-left: 250px;
+      height: 100vh;
+      background: #f0f2f5;
+    }
+    .dropdown-container {
+      position: fixed;
+      top: 150px;
+      left: 10px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      padding: 15px 25px;
+      min-width: 250px;
+      z-index: 1000;
+    }
+    label {
+      font-weight: 600;
+      color: #333;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      user-select: none;
+    }
+    select {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: 1.5px solid #bbb;
+      font-size: 1rem;
+      background: #fff;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 16px 16px;
+    }
+    select:hover,
+    select:focus {
+      border-color: #4a90e2;
+      outline: none;
+    }
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin: 30px auto;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #000000;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 40px;
+      color: #333;
+    }
+  </style>
+
+
+
+
+
+ 
+
+  <div class="container">
+    <h1>Movimentações de Estoque</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Data/Hora</th>
+          <th>Item</th>
+          <th>Quantidade</th>
+          <th>Posição</th>
+          <th>Filial</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="movimentacoes-table-body">
+        <!-- Conteúdo será inserido via JS -->
+      </tbody>
+    </table>  
+  </div>
+
+
+
+  <!--lista suspensa-->
+
+
+  <!-- Sidebar -->
+  <div class="sidebar-container">
+    <div class="sidebar-header">MENU</div>
+    <ul class="sidebar-menu">
+    
+
+         <li class="sidebar-item" data-page="menu.html">
+       Principal
+      </li>
+      <li class="sidebar-item" data-page="CADASTRO.html">
+        <span class="sidebar-icon">📝</span> Cadastro
+      </li>
+      <li class="sidebar-item" data-page="ESTOQUE.html">
+        <span class="sidebar-icon">📦</span> Estoque
+      </li>
+      <li class="sidebar-item" data-page="RELATORIO.html">
+        <span class="sidebar-icon">📊</span> Relatórios
+      </li>
+      <li class="sidebar-item" data-page="MOVIMENTACOES.html">
+        <span class="sidebar-icon">🔄</span> Movimentações
+      </li>
+    </ul>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <div class="main-content">
+    <!-- Seu conteúdo aqui -->
+  </div>
+
+  <script>
+    // JavaScript para lidar com os cliques na sidebar
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebarItems = document.querySelectorAll('.sidebar-item:not(.disabled)');
+      
+      sidebarItems.forEach(item => {
+        item.addEventListener('click', function() {
+          // Remove a classe active de todos os itens
+          sidebarItems.forEach(i => i.classList.remove('active'));
+          
+          // Adiciona a classe active ao item clicado
+          this.classList.add('active');
+          
+          // Navega para a página (mantendo sua lógica original)
+          const page = this.getAttribute('data-page');
+          if (page) {
+            window.location.href = page;
+            // Ou use sua lógica específica de navegação aqui
+          }
+        });
+      });
+      
+      // Ativa o item correspondente à página atual
+      const currentPage = window.location.pathname.split('/').pop();
+      const activeItem = document.querySelector(`.sidebar-item[data-page="${currentPage}"]`);
+      if (activeItem) {
+        activeItem.classList.add('active');
+      }
+    });
+  </script>
+
+
+  <script>
+   
+    // Função que carrega as movimentações do localStorage e preenche a tabela
+    function carregarMovimentacoes() {
+      const tbody = document.getElementById('movimentacoes-table-body');
+      const movimentacoes = JSON.parse(localStorage.getItem('movimentacoes')) || [];
+
+      tbody.innerHTML = ''; // limpa tabela antes de preencher
+
+      movimentacoes.forEach(mov => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${mov.dataHora}</td>
+          <td>${mov.item}</td>
+          <td>${mov.quantidade}</td>
+          <td>${mov.posicao}</td>
+          <td>${mov.filial}</td>
+          <td>${mov.status || ''}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    window.onload = carregarMovimentacoes;
+  </script>
+
+  
+</body>
+</html>
